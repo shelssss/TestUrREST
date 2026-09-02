@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Dark is the default because this is a tool developers
+ * keep open all day; light mode is a deliberate second theme with its own
+ * values, not an inverted copy.
+ *
+ * The chart colours are the output of the data-viz validator, not taste:
+ * `--chart-success` / `--chart-failure` are a blue/red polarity pair
+ * (CVD deltaE 25.7 dark, 23.8 light) because the obvious green/red pair
+ * measures deltaE 4.1 under deuteranopia and is unreadable for ~6% of men.
+ */
+
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-hover: #f1f3f6;
+  --border: #e2e5ea;
+  --border-strong: #cfd4dc;
+  --text: #0f1115;
+  --text-secondary: #4d5560;
+  --text-muted: #767c85;
+
+  --accent: #2a78d6;
+  --accent-hover: #1c5cab;
+  --accent-soft: rgba(42, 120, 214, 0.1);
+
+  /* Status tokens -- reserved for state, never reused as a series colour. */
+  --good: #0ca30c;
+  --warn: #fab219;
+  --bad: #d03b3b;
+
+  /* Chart roles (validated against the light surface #ffffff). */
+  --chart-success: #2a78d6;
+  --chart-failure: #d03b3b;
+  --chart-series-1: #2a78d6;
+  --chart-2xx: #0ca30c;
+  --chart-3xx: #2a78d6;
+  --chart-4xx: #fab219;
+  --chart-5xx: #d03b3b;
+  --chart-none: #767c85;
+  --chart-grid: #e6e8ec;
+  --chart-axis: #767c85;
+
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0b0d;
+  --surface: #131519;
+  --surface-raised: #1a1d23;
+  --surface-hover: #1e222a;
+  --border: #262a32;
+  --border-strong: #343943;
+  --text: #e6e8ec;
+  --text-secondary: #9aa1ac;
+  --text-muted: #6b7280;
+
+  --accent: #3987e5;
+  --accent-hover: #5598e7;
+  --accent-soft: rgba(57, 135, 229, 0.14);
+
+  --good: #0ca30c;
+  --warn: #fab219;
+  --bad: #d03b3b;
+
+  /* Chart roles re-stepped for the dark surface #131519 -- selected, not flipped. */
+  --chart-success: #3987e5;
+  --chart-failure: #d03b3b;
+  --chart-series-1: #3987e5;
+  --chart-2xx: #0ca30c;
+  --chart-3xx: #3987e5;
+  --chart-4xx: #fab219;
+  --chart-5xx: #d03b3b;
+  --chart-none: #6b7280;
+  --chart-grid: #23262d;
+  --chart-axis: #6b7280;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-size: 14px;
+  }
+
+  /* A slim, recessive scrollbar -- the content should be the loud part. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+    background-clip: content-box;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-surface border border-line rounded-lg;
+  }
+
+  /* Numbers that stack in a column must align; standalone display figures
+     deliberately do not use tabular figures. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
